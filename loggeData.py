@@ -9,25 +9,34 @@ sense = SenseHat()
 # Innstillingar
 tidsstempel = datetime.now()
 forsinkelse = 1
-listeVerdata = []
+
+def hentData():
+    listeVerdata = []
+
+    pressure = sense.get_pressure()
+    print("Trykk:",round(pressure,2))
+    listeVerdata.append(pressure)
+    
+    temp = sense.get_temperature()
+    print("Temperatur:",round(temp,2))
+    listeVerdata.append(temp)
+    
+    humidity = sense.get_humidity()
+    print("Fuktighet:",round(humidity,2))
+    listeVerdata.append(humidity)
+
+    # Legg til tidsstempel òg
+    listeVerdata.append(datetime.now())
+    
+    return listeVerdata
 
 # Maaling, basert paa https://projects.raspberrypi.org/en/projects/sense-hat-data-logger
 with open('verdata.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     while True:
-        pressure = sense.get_pressure()
-        print("Trykk:",round(pressure,2))
-        listeVerdata.append(pressure)
-        
-        temp = sense.get_temperature()
-        print("Temperatur:",round(temp,2))
-        listeVerdata.append(temp)
-        
-        humidity = sense.get_humidity()
-        print("Fuktighet:",round(humidity,2))
-        listeVerdata.append(humidity)
-        
-        dt = listeVerdata[-1] - tidsstempel
+        data = hentData()
+        dt = data[-1] - tidsstempel
+        #print(dt.seconds)
         if dt.seconds > forsinkelse:      
-            writer.writerow(listeVerdata)
-            print("Full liste denne runden:",listVerdata)
+            print("Full liste denne runden:",hentData())
+            tidsstempel = datetime.now()
