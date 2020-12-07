@@ -6,7 +6,6 @@ import csv
 
 sense = SenseHat()
 
-# Innstillingar
 tidsstempel = datetime.now()
 forsinkelse = 1
 
@@ -14,15 +13,15 @@ def hentData():
     listeVerdata = []
 
     pressure = sense.get_pressure()
-    print("Trykk:",round(pressure,2))
+    #print("Trykk:",round(pressure,2))
     listeVerdata.append(pressure)
     
     temp = sense.get_temperature()
-    print("Temperatur:",round(temp,2))
+    #print("Temperatur:",round(temp,2))
     listeVerdata.append(temp)
     
     humidity = sense.get_humidity()
-    print("Fuktighet:",round(humidity,2))
+    #print("Fuktighet:",round(humidity,2))
     listeVerdata.append(humidity)
 
     # Legg til tidsstempel òg
@@ -39,4 +38,5 @@ with open('verdata.csv', 'w', newline='') as f:
         #print(dt.seconds)
         if dt.seconds > forsinkelse:      
             print("Full liste denne runden:",hentData())
+            writer.writerow(data)
             tidsstempel = datetime.now()
