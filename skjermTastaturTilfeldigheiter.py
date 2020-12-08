@@ -1,7 +1,7 @@
 from sense_hat import SenseHat
 from time import sleep
 import random
-import numpy as np
+import sys
 
 sense = SenseHat()
 
@@ -40,7 +40,6 @@ def koyrerSkjermOppdatering(innType):
     
     # Heile skjermen
     if type == "heileSkjermen":
-      #sleep(fart)
       fart = sovetider[random.randint(0,len(sovetider)-1)]
       print(fart)
       sense.clear(tilfeldigFarge())
@@ -58,6 +57,6 @@ while kjorer == "jepp":
       elif event.direction == "down" and event.action == "pressed":
           koyrerSkjermOppdatering("heileSkjermen")
       elif event.direction == "middle" and event.action == "pressed":
-          kjorer = "nope"
+          sys.exit()
       else:
           print("Ventar på input frå joystick..")
