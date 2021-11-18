@@ -7,7 +7,7 @@ import csv
 sense = SenseHat()
 
 tidsstempel = datetime.now()
-forsinkelse = 1
+forsinkelse = 5
 
 def hentData():
     listeVerdata = []
@@ -37,6 +37,6 @@ with open('verdata.csv', 'w', newline='') as f:
         dt = data[-1] - tidsstempel
         #print(dt.seconds)
         if dt.seconds > forsinkelse:      
-            print("Full liste denne runden:",hentData())
+            print("Full liste denne runden:",data)
             writer.writerow(data)
             tidsstempel = datetime.now()
